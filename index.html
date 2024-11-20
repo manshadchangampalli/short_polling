@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta
+      name="viewport"
+      content="width=device-width, initial-scale=1.0"
+    />
+    <title>Document</title>
+  </head>
+  <body>
+    <div id="content-wrapper">
+      Loading...
+    </div>
+
+    <script>
+      const contentContainer =
+        document.getElementById(
+          "content-wrapper"
+        );
+
+      const getData = async () => {
+        try {
+          const res = await fetch(
+            "/getData"
+          );
+          const data = await res.json();
+          contentContainer.innerHTML =
+            data?.data;
+        } catch (error) {
+          console.log(error);
+        }
+      };
+      let interval;
+      const shortPolling = () => {
+        interval = setInterval(() => {
+          getData();
+        }, 5000);
+      };
+      shortPolling();
+
+      // after changing route or getting target
+      //   clearInterval(interval);
+    </script>
+  </body>
+</html>
